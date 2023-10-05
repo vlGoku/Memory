@@ -8,7 +8,6 @@ let gameboard = new Gameboard();
 gameboard.createCards();
 gameboard.shuffleArray();
 
-gameboard.pickCards(1);
-gameboard.pickCards(4);
-
 console.log(gameboard.stack);
+
+createMainMenu(gameboard);

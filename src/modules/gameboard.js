@@ -5,6 +5,7 @@ class Gameboard {
   constructor() {
     this.stack = [];
     this.turnedCards = [];
+    this.gameContainer = document.getElementById("app");
   }
 
   createCards() {
@@ -16,6 +17,24 @@ class Gameboard {
       }
       z++;
     }
+  }
+
+  createVisualCards() {
+    const numberOfCardsPerRow = 8; // 8 Karten pro Reihe
+
+    this.gameContainer.style.display = "grid";
+    this.gameContainer.style.gridTemplateColumns = `repeat(${numberOfCardsPerRow}, 100px)`;
+    this.gameContainer.style.gridGap = "10px";
+    this.gameContainer.style.placeItems = "center";
+
+    this.stack.forEach((card, index) => {
+      const cardElement = document.createElement("div");
+      cardElement.className = "card";
+      cardElement.textContent = card.matchingID;
+      cardElement.addEventListener("click", () => this.pickCards(index));
+      this.gameContainer.appendChild(cardElement);
+      card.htmlElement = cardElement; // speichere das DOM-Element in der Karteninstanz
+    });
   }
 
   pickCards(x) {

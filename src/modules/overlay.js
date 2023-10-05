@@ -1,10 +1,11 @@
+"use strict";
+import { Gameboard } from "./gameboard";
+
 // menu.js
 
 // Funktion, um das Hauptmenü zu erstellen und in die DOM-Struktur einzufügen
-function createMainMenu() {
+function createMainMenu(gameboard) {
   // Erstelle Input-Feld für den Spielername
-  const title = document.createElement("h1");
-  title.textContent = "Memory";
   const nameInput = document.createElement("input");
   nameInput.className = "input-field";
   nameInput.placeholder = "Enter your name";
@@ -27,26 +28,23 @@ function createMainMenu() {
 
   // Füge die Elemente in die DOM-Struktur ein
   const appDiv = document.getElementById("app");
-  appDiv.appendChild(title);
-  appDiv.appendChild(document.createElement("br"));
   appDiv.appendChild(nameInput);
-  appDiv.appendChild(document.createElement("br"));
   appDiv.appendChild(difficultySelect);
-  appDiv.appendChild(document.createElement("br"));
   appDiv.appendChild(startButton);
 
   // Füge einen Event Listener zum Start-Button hinzu
   startButton.addEventListener("click", function () {
     const playerName = nameInput.value;
     const selectedDifficulty = difficultySelect.value;
-    startGame(playerName, selectedDifficulty);
-    removeMainMenu(); // Entferne das Hauptmenü nach dem Spielstart
-    displayPlayerInfo(playerName, selectedDifficulty); // Zeige Spielerinformationen während des Spiels
+    startGame(playerName, selectedDifficulty, gameboard);
   });
 }
 
 // Funktion, die aufgerufen wird, wenn der Start-Button geklickt wird
-function startGame(playerName, selectedDifficulty) {
+function startGame(playerName, selectedDifficulty, gameboard) {
+  removeMainMenu(); // Entferne das Hauptmenü nach dem Spielstart
+  displayPlayerInfo(playerName, selectedDifficulty); // Zeige Spielerinformationen während des Spiels
+  gameboard.createVisualCards();
   // Hier kannst du den Spielstart-Code implementieren
   console.log(
     `Spiel gestartet! Spieler: ${playerName}, Schwierigkeit: ${selectedDifficulty}`
@@ -74,5 +72,4 @@ function displayPlayerInfo(playerName, selectedDifficulty) {
   appDiv.appendChild(playerInfoDiv);
 }
 
-// Rufe die Funktion createMainMenu() auf, um das Hauptmenü zu erstellen, wenn die Seite geladen ist
-document.addEventListener("DOMContentLoaded", createMainMenu);
+export { createMainMenu };
