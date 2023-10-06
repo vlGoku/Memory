@@ -16,7 +16,6 @@ function createMainMenu(gameboard) {
   const difficultyOptions = ["Leicht", "Mittel", "Schwer"];
   difficultyOptions.forEach((optionText) => {
     const option = document.createElement("option");
-    option.value = optionText.toLowerCase();
     option.text = optionText;
     difficultySelect.appendChild(option);
   });

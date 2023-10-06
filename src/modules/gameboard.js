@@ -6,6 +6,24 @@ class Gameboard {
     this.stack = [];
     this.turnedCards = [];
     this.gameContainer = document.getElementById("app");
+    this.cardImages = [
+      "/img/dog-solid.svg",
+      "/img/dog-solid.svg",
+      "/img/dove-solid.svg",
+      "/img/dove-solid.svg",
+      "/img/dragon-solid.svg",
+      "/img/dragon-solid.svg",
+      "/img/fish-fins-solid.svg",
+      "/img/fish-fins-solid.svg",
+      "/img/hippo-solid.svg",
+      "/img/hippo-solid.svg",
+      "/img/paw-solid.svg",
+      "/img/paw-solid.svg",
+      "/img/spider-solid.svg",
+      "/img/spider-solid.svg",
+      "/img/js-badge.svg",
+      "/img/js-badge.svg",
+    ];
   }
 
   createCards() {
@@ -20,7 +38,8 @@ class Gameboard {
   }
 
   createVisualCards() {
-    const numberOfCardsPerRow = 8; // 8 Karten pro Reihe
+    this.shuffleArray(this.cardImages);
+    const numberOfCardsPerRow = 8;
 
     this.gameContainer.style.display = "grid";
     this.gameContainer.style.gridTemplateColumns = `repeat(${numberOfCardsPerRow}, 100px)`;
@@ -29,21 +48,30 @@ class Gameboard {
 
     this.stack.forEach((card, index) => {
       const cardElement = document.createElement("div");
-      cardElement.className = "card";
-      cardElement.textContent = card.matchingID;
+      cardElement.classList.add("card");
+      cardElement.classList.add("back");
+      cardElement.id = card.id;
+      cardElement.innerHTML = card.matchingID;
       cardElement.addEventListener("click", () => this.pickCards(index));
       this.gameContainer.appendChild(cardElement);
       card.htmlElement = cardElement; // speichere das DOM-Element in der Karteninstanz
     });
   }
 
-  pickCards(x) {
-    this.stack[x].turned = true;
-    this.turnedCards.push(this.stack[x]);
-    if (this.turnedCards.length == 2) {
-      this.checkForPair();
+  pickCards(index) {
+    if (this.stack[index].turned == false) {
+      this.toggleCard(this.stack[index].htmlElement);
+      this.stack[index].turned = true;
+      this.turnedCards.push(this.stack[index]);
+      if (this.turnedCards.length == 2) {
+        this.checkForPair();
+      }
+      this.checkForWin();
     }
-    this.checkForWin();
+  }
+
+  toggleCard(cardElement) {
+    cardElement.classList.toggle("front");
   }
 
   checkForPair() {
@@ -52,9 +80,13 @@ class Gameboard {
     if (card1.matchingID === card2.matchingID) {
       console.log("Wir sind ein Paar");
     } else {
-      this.stack[card1.id - 1].turned = false;
-      this.stack[card2.id - 1].turned = false;
+      const card1Index = this.stack.indexOf(card1);
+      const card2Index = this.stack.indexOf(card2);
+      this.stack[card1Index].turned = false;
+      this.stack[card2Index].turned = false;
       console.log("Wir sind kein Paar");
+      console.log(this.stack);
+      console.log(card1Index, card2Index);
     }
     this.turnedCards = [];
   }
