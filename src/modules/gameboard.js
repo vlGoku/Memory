@@ -72,8 +72,12 @@ class Gameboard {
   turnBack(id1, id2) {
     const cardOne = document.getElementById(id1);
     const cardTwo = document.getElementById(id2);
-    this.toggleCard(cardOne);
-    this.toggleCard(cardTwo);
+    cardOne.classList.remove("front");
+    cardTwo.classList.remove("front");
+    cardOne.classList.add("back");
+    cardTwo.classList.add("back");
+    console.log(cardOne.classList);
+    console.log(cardTwo.classList);
   }
 
   checkForPair() {
@@ -86,7 +90,7 @@ class Gameboard {
       const card2Index = this.stack.indexOf(card2);
       this.stack[card1Index].turned = false;
       this.stack[card2Index].turned = false;
-      this.turnBack(card1.id, card2.id);
+      setTimeout(this.turnBack, 2000, card1.id, card2.id);
     }
     this.turnedCards = [];
   }
