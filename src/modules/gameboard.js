@@ -1,5 +1,6 @@
 "use strict";
 import { Card } from "./cards";
+import { createWinScreen, showWinOverlay, hideWinOverlay } from "./overlay";
 
 class Gameboard {
   constructor() {
@@ -8,20 +9,13 @@ class Gameboard {
     this.gameContainer = document.getElementById("app");
     this.cardImages = [
       "/img/dog-solid.svg",
-      "/img/dog-solid.svg",
-      "/img/dove-solid.svg",
       "/img/dove-solid.svg",
       "/img/dragon-solid.svg",
-      "/img/dragon-solid.svg",
-      "/img/fish-fins-solid.svg",
       "/img/fish-fins-solid.svg",
       "/img/hippo-solid.svg",
-      "/img/hippo-solid.svg",
-      "/img/paw-solid.svg",
       "/img/paw-solid.svg",
       "/img/spider-solid.svg",
-      "/img/spider-solid.svg",
-      "/img/js-badge.svg",
+      "/img/aurelia.svg",
       "/img/js-badge.svg",
     ];
   }
@@ -54,7 +48,7 @@ class Gameboard {
       cardElement.innerHTML = card.matchingID;
       cardElement.addEventListener("click", () => this.pickCards(index));
       this.gameContainer.appendChild(cardElement);
-      card.htmlElement = cardElement; // speichere das DOM-Element in der Karteninstanz
+      card.htmlElement = cardElement;
     });
   }
 
@@ -72,23 +66,37 @@ class Gameboard {
 
   toggleCard(cardElement) {
     cardElement.classList.toggle("front");
+    cardElement.classList.toggle("back");
+  }
+
+  turnBack(id1, id2) {
+    const cardOne = document.getElementById(id1);
+    const cardTwo = document.getElementById(id2);
+    this.toggleCard(cardOne);
+    this.toggleCard(cardTwo);
   }
 
   checkForPair() {
-    console.log(this.turnedCards);
     const [card1, card2] = this.turnedCards;
     if (card1.matchingID === card2.matchingID) {
       console.log("Wir sind ein Paar");
     } else {
+      console.log("Wir sind kein Paar");
       const card1Index = this.stack.indexOf(card1);
       const card2Index = this.stack.indexOf(card2);
       this.stack[card1Index].turned = false;
       this.stack[card2Index].turned = false;
-      console.log("Wir sind kein Paar");
-      console.log(this.stack);
-      console.log(card1Index, card2Index);
+      this.turnBack(card1.id, card2.id);
     }
     this.turnedCards = [];
+  }
+
+  wait(seconds) {
+    const start = new Date().getTime();
+    let endLoop = start;
+    while (endLoop < start + seconds) {
+      endLoop = new Date().getTime();
+    }
   }
 
   checkForWin() {
@@ -99,6 +107,7 @@ class Gameboard {
       }
     });
     if (z == 0) {
+      createWinScreen();
       console.log("Du hast gewonnen!");
     }
   }

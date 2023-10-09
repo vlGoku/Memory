@@ -41,15 +41,12 @@ function createMainMenu(gameboard) {
 
 // Funktion, die aufgerufen wird, wenn der Start-Button geklickt wird
 function startGame(playerName, selectedDifficulty, gameboard) {
-  removeMainMenu(); // Entferne das Hauptmenü nach dem Spielstart
-  displayPlayerInfo(playerName, selectedDifficulty); // Zeige Spielerinformationen während des Spiels
+  removeMainMenu();
+  displayPlayerInfo(playerName, selectedDifficulty);
   gameboard.createVisualCards();
-  // Hier kannst du den Spielstart-Code implementieren
-  console.log(
-    `Spiel gestartet! Spieler: ${playerName}, Schwierigkeit: ${selectedDifficulty}`
-  );
 }
 
+//Funktion zum entfernen des Menüs nachdem das Spiel gestartet wurde
 function removeMainMenu() {
   const appDiv = document.getElementById("app");
   const menuElements = appDiv.querySelectorAll(
@@ -62,6 +59,7 @@ function removeMainMenu() {
   });
 }
 
+//Zeige Name und Schwierigkeit an
 function displayPlayerInfo(playerName, selectedDifficulty) {
   const playerInfoDiv = document.createElement("div");
   playerInfoDiv.className = "player-info";
@@ -71,4 +69,37 @@ function displayPlayerInfo(playerName, selectedDifficulty) {
   appDiv.appendChild(playerInfoDiv);
 }
 
-export { createMainMenu };
+//Erstellt den Win-Screen
+function createWinScreen() {
+  const appDiv = document.getElementById("app");
+  const winDiv = document.createElement("div");
+  winDiv.className = "winDiv";
+  winDiv.id = "win-overlay";
+  const winScreen = document.createElement("div");
+  winScreen.className = "winScreen-content";
+  const winningMessage = document.createElement("h1");
+  winningMessage.className = "winningMessage";
+  winningMessage.textContent = "Du hast gewonnen";
+  const restartButton = document.createElement("button");
+  restartButton.id = "restartButton";
+  restartButton.innerHTML = "Start another round";
+  appDiv.appendChild(winDiv);
+  winDiv.appendChild(winScreen);
+  winScreen.appendChild(winningMessage);
+  winScreen.appendChild(restartButton);
+  showWinOverlay();
+}
+
+//Zeigt das Win-Screen Overlay
+function showWinOverlay() {
+  const winOverlay = document.getElementById("win-overlay");
+  winOverlay.style.display = "flex";
+}
+
+//Versteckt das Win-Screen Overlay bis die Bedingung eintrifft
+function hideWinOverlay() {
+  const winOverlay = document.getElementById("win-overlay");
+  winOverlay.style.display = "none";
+}
+
+export { createMainMenu, createWinScreen, showWinOverlay, hideWinOverlay };
