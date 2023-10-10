@@ -43,7 +43,9 @@ function createMainMenu(gameboard) {
 function startGame(playerName, selectedDifficulty, gameboard) {
   removeMainMenu();
   displayPlayerInfo(playerName, selectedDifficulty);
-  gameboard.createVisualCards();
+  gameboard.createCards(selectedDifficulty);
+  gameboard.createVisualCards(selectedDifficulty);
+  gameboard.addBackToCard();
 }
 
 //Funktion zum entfernen des Menüs nachdem das Spiel gestartet wurde
@@ -88,6 +90,9 @@ function createWinScreen() {
   winScreen.appendChild(winningMessage);
   winScreen.appendChild(restartButton);
   showWinOverlay();
+  restartButton.addEventListener("click", function () {
+    location.reload();
+  });
 }
 
 //Zeigt das Win-Screen Overlay

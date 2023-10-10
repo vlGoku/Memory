@@ -1,6 +1,18 @@
 "use strict";
 import { Card } from "./cards";
 import { createWinScreen, showWinOverlay, hideWinOverlay } from "./overlay";
+import dog from "../img/dog-solid.svg";
+import angular from "../img/angular.svg";
+import dove from "../img/dove-solid.svg";
+import dragon from "../img/dragon-solid.svg";
+import aurelia from "../img/aurelia.svg";
+import fish from "../img/fish-fins-solid.svg";
+import hippo from "../img/hippo-solid.svg";
+import paw from "../img/paw-solid.svg";
+import spider from "../img/spider-solid.svg";
+import ember from "../img/ember.svg";
+import react from "../img/react.svg";
+import vue from "../img/vue.svg";
 
 class Gameboard {
   constructor() {
@@ -8,21 +20,32 @@ class Gameboard {
     this.turnedCards = [];
     this.gameContainer = document.getElementById("app");
     this.cardImages = [
-      "/img/dog-solid.svg",
-      "/img/dove-solid.svg",
-      "/img/dragon-solid.svg",
-      "/img/fish-fins-solid.svg",
-      "/img/hippo-solid.svg",
-      "/img/paw-solid.svg",
-      "/img/spider-solid.svg",
-      "/img/aurelia.svg",
-      "/img/js-badge.svg",
+      dog,
+      angular,
+      dove,
+      dragon,
+      aurelia,
+      fish,
+      hippo,
+      paw,
+      spider,
+      ember,
+      react,
+      vue,
     ];
   }
 
-  createCards() {
+  createCards(selectedDifficulty) {
+    let cardNum = 0;
+    if (selectedDifficulty === "Leicht") {
+      cardNum = 9;
+    } else if (selectedDifficulty === "Mittel") {
+      cardNum = 17;
+    } else if (selectedDifficulty === "Schwer") {
+      cardNum = 25;
+    }
     let z = 1;
-    for (let i = 1; i < 17; i += 2) {
+    for (let i = 1; i < cardNum; i += 2) {
       for (let j = 0; j < 2; j++) {
         let card = new Card(i + j, z);
         this.stack.push(card);
@@ -31,9 +54,16 @@ class Gameboard {
     }
   }
 
-  createVisualCards() {
-    this.shuffleArray(this.cardImages);
-    const numberOfCardsPerRow = 8;
+  createVisualCards(selectedDifficulty) {
+    let cardNum = 0;
+    if (selectedDifficulty === "Leicht") {
+      cardNum = 4;
+    } else if (selectedDifficulty === "Mittel") {
+      cardNum = 8;
+    } else if (selectedDifficulty === "Schwer") {
+      cardNum = 8;
+    }
+    const numberOfCardsPerRow = cardNum;
 
     this.gameContainer.style.display = "grid";
     this.gameContainer.style.gridTemplateColumns = `repeat(${numberOfCardsPerRow}, 100px)`;
@@ -43,12 +73,25 @@ class Gameboard {
     this.stack.forEach((card, index) => {
       const cardElement = document.createElement("div");
       cardElement.classList.add("card");
-      cardElement.classList.add("back");
       cardElement.id = card.id;
       cardElement.innerHTML = card.matchingID;
+      const front = new Image();
+      front.src = angular;
+      cardElement.style.backgroundImage = `url(${
+        this.cardImages[card.matchingID - 1]
+      })`;
       cardElement.addEventListener("click", () => this.pickCards(index));
       this.gameContainer.appendChild(cardElement);
       card.htmlElement = cardElement;
+    });
+  }
+
+  addBackToCard() {
+    this.stack.forEach((card, index) => {
+      const cardId = card.id;
+      const cardElement = document.getElementById(cardId.toString());
+      cardElement.classList.add("back");
+      console.log(cardElement);
     });
   }
 

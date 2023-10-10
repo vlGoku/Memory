@@ -5,9 +5,6 @@ import { Card } from "./modules/cards";
 import { createMainMenu } from "./modules/overlay";
 
 let gameboard = new Gameboard();
-gameboard.createCards();
-gameboard.shuffleArray();
-
-console.log(gameboard.stack);
-
 createMainMenu(gameboard);
+gameboard.createCards(selectedDifficulty);
+gameboard.shuffleArray();

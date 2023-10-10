@@ -64,11 +64,11 @@ body {
 .card {
   width: 100px;
   height: 150px;
-  background-color: #ccc;
   margin: 5px;
+  border: 1px solid white;
+  background-color: lightblue;
   position: relative;
   transform-style: preserve-3d;
-  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
   transform: scale(1);
   cursor: pointer;
   transition: transform 0.6s ease;
@@ -76,14 +76,16 @@ body {
 
 .back {
   transform: rotateY(0deg);
-  background-image: url(/img/js-badge.svg);
+  background-image: url(./img/question-mark-svgrepo-com.svg) !important;
   background-position: center center;
   background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .front {
   transform: rotateY(180deg);
-  background-image: none;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 /*Win Screen Styling*/
