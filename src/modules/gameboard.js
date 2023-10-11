@@ -19,6 +19,7 @@ class Gameboard {
     this.stack = [];
     this.turnedCards = [];
     this.gameContainer = document.getElementById("app");
+    //Hier sind die Bilder für das Memory drinnen
     this.cardImages = [
       dog,
       angular,
@@ -35,13 +36,17 @@ class Gameboard {
     ];
   }
 
+  //Hier werden die Karten im Hintergrund je nach Schwierigkeit erstellt
   createCards(selectedDifficulty) {
     let cardNum = 0;
     if (selectedDifficulty === "Leicht") {
+      //8 Karten mit 4 Paaren
       cardNum = 9;
     } else if (selectedDifficulty === "Mittel") {
+      //16 Karten mit 8 Paaren
       cardNum = 17;
     } else if (selectedDifficulty === "Schwer") {
+      // 24 Karten mit 12 Paaren
       cardNum = 25;
     }
     let z = 1;
@@ -54,6 +59,7 @@ class Gameboard {
     }
   }
 
+  //Erstellung der "sichtbaren" Karten
   createVisualCards(selectedDifficulty) {
     let cardNum = 0;
     if (selectedDifficulty === "Leicht") {
@@ -63,38 +69,41 @@ class Gameboard {
     } else if (selectedDifficulty === "Schwer") {
       cardNum = 8;
     }
-    const numberOfCardsPerRow = cardNum;
+    const numberOfCardsPerRow = cardNum; //Hier wird die variable "cardNum" genommen,
+    // um eine bestimmte Anzahl an Karten pro Reihe zu bekommen
 
+    //Erstellung des "Spielfeldes"
     this.gameContainer.style.display = "grid";
     this.gameContainer.style.gridTemplateColumns = `repeat(${numberOfCardsPerRow}, 100px)`;
     this.gameContainer.style.gridGap = "10px";
     this.gameContainer.style.placeItems = "center";
 
+    //Erstellung der Karten
     this.stack.forEach((card, index) => {
       const cardElement = document.createElement("div");
       cardElement.classList.add("card");
       cardElement.id = card.id;
-      cardElement.innerHTML = card.matchingID;
       const front = new Image();
       front.src = angular;
       cardElement.style.backgroundImage = `url(${
         this.cardImages[card.matchingID - 1]
       })`;
-      cardElement.addEventListener("click", () => this.pickCards(index));
+      cardElement.addEventListener("click", () => this.pickCards(index)); //EventListener für den klick auf die Karte
       this.gameContainer.appendChild(cardElement);
       card.htmlElement = cardElement;
     });
   }
 
+  //Rückseite der Karte wird geaddet
   addBackToCard() {
     this.stack.forEach((card, index) => {
       const cardId = card.id;
       const cardElement = document.getElementById(cardId.toString());
       cardElement.classList.add("back");
-      console.log(cardElement);
     });
   }
 
+  //Kartenauswahl
   pickCards(index) {
     if (this.stack[index].turned == false) {
       this.toggleCard(this.stack[index].htmlElement);
@@ -107,11 +116,13 @@ class Gameboard {
     }
   }
 
+  //Wechsel zwischen "front" & "back" Seite der Karte
   toggleCard(cardElement) {
     cardElement.classList.toggle("front");
     cardElement.classList.toggle("back");
   }
 
+  //Hier wird die Karte wieder umgedreht
   turnBack(id1, id2) {
     const cardOne = document.getElementById(id1);
     const cardTwo = document.getElementById(id2);
@@ -119,25 +130,23 @@ class Gameboard {
     cardTwo.classList.remove("front");
     cardOne.classList.add("back");
     cardTwo.classList.add("back");
-    console.log(cardOne.classList);
-    console.log(cardTwo.classList);
   }
 
+  //Funktion zur Prüfung der Paare
   checkForPair() {
     const [card1, card2] = this.turnedCards;
     if (card1.matchingID === card2.matchingID) {
-      console.log("Wir sind ein Paar");
     } else {
-      console.log("Wir sind kein Paar");
       const card1Index = this.stack.indexOf(card1);
       const card2Index = this.stack.indexOf(card2);
       this.stack[card1Index].turned = false;
       this.stack[card2Index].turned = false;
-      setTimeout(this.turnBack, 2000, card1.id, card2.id);
+      setTimeout(this.turnBack, 1000, card1.id, card2.id); //Hier werden die falschen Paare nach einer Sekunde wieder zurückgedreht
     }
     this.turnedCards = [];
   }
 
+  //Funktion die einfach nur wartet
   wait(seconds) {
     const start = new Date().getTime();
     let endLoop = start;
@@ -146,6 +155,7 @@ class Gameboard {
     }
   }
 
+  //Prüfung ob man gewonnen hat
   checkForWin() {
     let z = 0;
     this.stack.forEach((card) => {
@@ -155,10 +165,10 @@ class Gameboard {
     });
     if (z == 0) {
       createWinScreen();
-      console.log("Du hast gewonnen!");
     }
   }
 
+  //Hier werden die Karten im Backend gemischt
   shuffleArray() {
     for (let i = this.stack.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));

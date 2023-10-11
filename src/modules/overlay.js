@@ -1,8 +1,6 @@
 "use strict";
 import { Gameboard } from "./gameboard";
 
-// menu.js
-
 // Funktion, um das Hauptmenü zu erstellen und in die DOM-Struktur einzufügen
 function createMainMenu(gameboard) {
   // Erstelle Input-Feld für den Spielername
@@ -41,10 +39,11 @@ function createMainMenu(gameboard) {
 
 // Funktion, die aufgerufen wird, wenn der Start-Button geklickt wird
 function startGame(playerName, selectedDifficulty, gameboard) {
-  removeMainMenu();
-  displayPlayerInfo(playerName, selectedDifficulty);
   gameboard.createCards(selectedDifficulty);
+  gameboard.shuffleArray();
   gameboard.createVisualCards(selectedDifficulty);
+  displayPlayerInfo(playerName, selectedDifficulty);
+  removeMainMenu();
   gameboard.addBackToCard();
 }
 
