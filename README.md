@@ -44,7 +44,7 @@ wait just waits
 wait(seconds);
 ```
 
-shuffleArray shuffels the cards in the array so they are arranged randomly on the field
+shuffleArray shuffles the cards in the array so they are arranged randomly on the field
 
 ```sh
 shuffleArray();
@@ -58,7 +58,7 @@ createMainMenu creates the main Menu for the game
 createMainMenu(gameboard);
 ```
 
-startGame starts the game after the user inputs their name and select a difficulty and displays the players name and difficulty
+startGame starts the game after the user inputs their name and selects a difficulty and displays the players name and difficulty
 
 ```sh
 function startGame(playerName, selectedDifficulty, gameboard)
@@ -70,7 +70,7 @@ function startGame(playerName, selectedDifficulty, gameboard)
   gameboard.addBackToCard();
 ```
 
-removeMainMenu removes the menu after the start Game button has been klicked
+removeMainMenu removes the menu after the start Game button has been clicked
 
 ```sh
 function removeMainMenu();
