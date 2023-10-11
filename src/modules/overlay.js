@@ -1,5 +1,6 @@
 "use strict";
 import { Gameboard } from "./gameboard";
+import sheriff from "../img/1696232889golden-sheriff-badge .svg";
 
 // Funktion, um das Hauptmenü zu erstellen und in die DOM-Struktur einzufügen
 function createMainMenu(gameboard) {
@@ -37,6 +38,41 @@ function createMainMenu(gameboard) {
   });
 }
 
+function createMainMenuHard(gameboard) {
+  // Erstelle Input-Feld für den Spielername
+  const nameInput = document.createElement("input");
+  nameInput.className = "input-field";
+  nameInput.placeholder = "Enter your name";
+
+  // Erstelle Select-Feld für die Schwierigkeitsauswahl
+  const difficultySelect = document.createElement("select");
+  difficultySelect.className = "select-field";
+  const difficultyOptions = ["Leicht", "Mittel", "Schwer", "Expert"];
+  difficultyOptions.forEach((optionText) => {
+    const option = document.createElement("option");
+    option.text = optionText;
+    difficultySelect.appendChild(option);
+  });
+
+  // Erstelle Start-Button
+  const startButton = document.createElement("button");
+  startButton.className = "start-button";
+  startButton.innerText = "Start Game";
+
+  // Füge die Elemente in die DOM-Struktur ein
+  const appDiv = document.getElementById("app");
+  appDiv.appendChild(nameInput);
+  appDiv.appendChild(difficultySelect);
+  appDiv.appendChild(startButton);
+
+  // Füge einen Event Listener zum Start-Button hinzu
+  startButton.addEventListener("click", function () {
+    const playerName = nameInput.value;
+    const selectedDifficulty = difficultySelect.value;
+    startGame(playerName, selectedDifficulty, gameboard);
+  });
+}
+
 // Funktion, die aufgerufen wird, wenn der Start-Button geklickt wird
 function startGame(playerName, selectedDifficulty, gameboard) {
   gameboard.createCards(selectedDifficulty);
@@ -45,6 +81,7 @@ function startGame(playerName, selectedDifficulty, gameboard) {
   displayPlayerInfo(playerName, selectedDifficulty);
   removeMainMenu();
   gameboard.addBackToCard();
+  secretButton();
 }
 
 //Funktion zum entfernen des Menüs nachdem das Spiel gestartet wurde
@@ -104,6 +141,50 @@ function showWinOverlay() {
 function hideWinOverlay() {
   const winOverlay = document.getElementById("win-overlay");
   winOverlay.style.display = "none";
+}
+
+function secretDiv() {
+  const appDiv = document.getElementById("app");
+  const secretDiv = document.createElement("div");
+  secretDiv.className = "secretDiv";
+  secretDiv.id = "secretDiv-Overlay";
+  const secretScreen = document.createElement("div");
+  secretScreen.className = "secretDiv-content";
+  const secretMessage = document.createElement("h1");
+  secretMessage.className = "secretMessage";
+  secretMessage.textContent = "Secret";
+  const continueButton = document.createElement("button");
+  continueButton.id = "continueButton";
+  continueButton.innerHTML = "Continue...";
+  appDiv.appendChild(secretDiv);
+  secretDiv.appendChild(secretScreen);
+  secretScreen.appendChild(secretMessage);
+  secretScreen.appendChild(continueButton);
+  showSecretOverlay();
+  continueButton.addEventListener("click", function () {
+    let gameboard = new Gameboard();
+    createMainMenuHard(gameboard);
+    hideSecretOverlay();
+  });
+}
+
+function showSecretOverlay() {
+  const secretOverlay = document.getElementById("secretDiv-Overlay");
+  secretOverlay.style.display = "flex";
+}
+
+function hideSecretOverlay() {
+  const secretOverlay = document.getElementById("secretDiv-Overlay");
+  secretOverlay.style.display = "none";
+}
+function secretButton() {
+  const secretButton = document.createElement("button");
+  secretButton.id = "secretButton";
+  const gameContainer = document.getElementById("app");
+  gameContainer.appendChild(secretButton);
+  secretButton.addEventListener("click", function () {
+    secretDiv();
+  });
 }
 
 export { createMainMenu, createWinScreen, showWinOverlay, hideWinOverlay };

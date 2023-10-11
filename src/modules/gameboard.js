@@ -48,6 +48,8 @@ class Gameboard {
     } else if (selectedDifficulty === "Schwer") {
       // 24 Karten mit 12 Paaren
       cardNum = 25;
+    } else if (selectedDifficulty === "Expert") {
+      cardNum = 37;
     }
     let z = 1;
     for (let i = 1; i < cardNum; i += 2) {
@@ -68,6 +70,8 @@ class Gameboard {
       cardNum = 8;
     } else if (selectedDifficulty === "Schwer") {
       cardNum = 8;
+    } else if (selectedDifficulty === "Expert") {
+      cardNum = 12;
     }
     const numberOfCardsPerRow = cardNum; //Hier wird die variable "cardNum" genommen,
     // um eine bestimmte Anzahl an Karten pro Reihe zu bekommen
