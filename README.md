@@ -1,33 +1,90 @@
-# memory
+# Memory
 
-Empty project.
+## Some explanation of the Code
 
-## Building and running on localhost
-
-First install dependencies:
+Main files:
 
 ```sh
-npm install
+class Gameboard and file overlay
 ```
 
-To create a production build:
+## class Gameboard
+
+createCards and createVisualCards are here for creating the Cards in the backend and the frontend:
 
 ```sh
-npm run build-prod
+createCards(selectedDifficulty);
+createVisualCards(selectedDifficulty);
 ```
 
-To create a development build:
+pickCards is for picking the cards:
 
 ```sh
-npm run build-dev
+pickCards(index);
 ```
 
-## Running
+addBackToCard adds the class "back" to the card, toggleCard toggles between the classes "front" and "back" and turnBack turns back the card after it was revealed
 
 ```sh
-node dist/bundle.js
+addBackToCard();
+toggleCard(cardElement);
+turnBack(id1, id2);
 ```
 
-## Credits
+checkForPair and checkForWin are self explanatory
 
-Made with [createapp.dev](https://createapp.dev/)
+```sh
+checkForWin();
+checkForPair();
+```
+
+wait just waits
+
+```sh
+wait(seconds);
+```
+
+shuffleArray shuffels the cards in the array so they are arranged randomly on the field
+
+```sh
+shuffleArray();
+```
+
+## overlay
+
+createMainMenu creates the main Menu for the game
+
+```sh
+createMainMenu(gameboard);
+```
+
+startGame starts the game after the user inputs their name and select a difficulty and displays the players name and difficulty
+
+```sh
+function startGame(playerName, selectedDifficulty, gameboard)
+  gameboard.createCards(selectedDifficulty);
+  gameboard.shuffleArray();
+  gameboard.createVisualCards(selectedDifficulty);
+  displayPlayerInfo(playerName, selectedDifficulty);
+  removeMainMenu();
+  gameboard.addBackToCard();
+```
+
+removeMainMenu removes the menu after the start Game button has been klicked
+
+```sh
+function removeMainMenu();
+```
+
+createWinScreen creates the win Screen after the game is done
+
+```sh
+function createWinScreen();
+```
+
+showWinOverlay and hideWinOverlay are just here for showing/hiding the overlay
+
+```sh
+function showWinOverlay();
+function hideWinOverlay();
+```
