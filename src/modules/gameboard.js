@@ -13,6 +13,12 @@ import spider from "../img/spider-solid.svg";
 import ember from "../img/ember.svg";
 import react from "../img/react.svg";
 import vue from "../img/vue.svg";
+import cow from "../img/cow-solid.svg";
+import horse from "../img/horse-solid.svg";
+import frog from "../img/frog-solid.svg";
+import kiwi from "../img/kiwi-bird-solid.svg";
+import locust from "../img/locust-solid.svg";
+import otter from "../img/otter-solid.svg";
 
 class Gameboard {
   constructor() {
@@ -33,6 +39,12 @@ class Gameboard {
       ember,
       react,
       vue,
+      cow,
+      horse,
+      frog,
+      kiwi,
+      locust,
+      otter,
     ];
   }
 
