@@ -157,7 +157,7 @@ class Gameboard {
       const card2Index = this.stack.indexOf(card2);
       this.stack[card1Index].turned = false;
       this.stack[card2Index].turned = false;
-      setTimeout(this.turnBack, 1000, card1.id, card2.id); //Hier werden die falschen Paare nach einer Sekunde wieder zurückgedreht
+      setTimeout(this.turnBack, 900, card1.id, card2.id); //Hier werden die falschen Paare nach einer Sekunde wieder zurückgedreht
     }
     this.turnedCards = [];
   }
